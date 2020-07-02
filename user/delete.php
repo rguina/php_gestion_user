@@ -1,8 +1,8 @@
 <?php include '../include/connexion.php';
 
 $id = $_GET['id'];
-$req = $bd->prepare('delete from villes where id=?');
+$req = $bd->prepare('delete from users where id=?');
 
 $req->execute([$id]);
 
-header('location: /ville/list.php?message=deleted');
+header('location: /user/list.php?message=deleted');

@@ -7,6 +7,7 @@ $jq='../js/jQuery.js';
 $bu='../js/bootstrap.bundle.js';
 ?>
     
+    <?php include '../include/session.php'; ?>
     <?php include '../include/connexion.php'; ?>
     <?php include '../include/header.php'; ?>
     <?php include '../include/menu.php'; ?>
@@ -39,21 +40,32 @@ $bu='../js/bootstrap.bundle.js';
                         <tr>
                             <th>#</th>
                             <th>Nom</th>
+                            <th>prenom</th>
+                            <th>email</th>
+                            <th>ville</th>
+                            <th>role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $req = $bd->query('select * from users');
+                        <?php 
+                        $req = $bd->query('select * from users');
                         while($data = $req->fetch()):
+                        $query = $bd->query("select * from villes where id=".$data['ville']);
+                        $donnee = $query->fetch();
                         ?>
                             <tr>
                                 <td><?= $data['id'] ?></td>
                                 <td><?= $data['nom'] ?></td>
+                                <td><?= $data['prenom'] ?></td>
+                                <td><?= $data['email'] ?></td>
+                                <td><?= $donnee['nom'] ?></td>
+                                <td><?= $data['role'] ?></td>
                                 <td>
-                                    <a href="/ville/update.php?id=<?= $data['id'] ?>" class="btn btn-warning">
+                                    <a href="/user/update.php?id=<?= $data['id'] ?>" class="btn btn-warning">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="/ville/delete.php?id=<?= $data['id'] ?>" class="btn btn-danger">
+                                    <a href="/user/delete.php?id=<?= $data['id'] ?>" class="btn btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>

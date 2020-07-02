@@ -7,6 +7,7 @@ $jq='../js/jQuery.js';
 $bu='../js/bootstrap.bundle.js';
 ?>
     
+    <?php include '../include/session.php'; ?>
     <?php include '../include/connexion.php'; ?>
     <?php include '../include/header.php'; ?>
     <?php include '../include/menu.php'; ?>

@@ -7,6 +7,7 @@ $jq='../js/jQuery.js';
 $bu='../js/bootstrap.bundle.js';
 ?>
     
+    <?php include '../include/session.php'; ?>
     <?php include '../include/connexion.php'; ?>
     <?php include '../include/header.php'; ?>
     <?php include '../include/menu.php'; ?>
@@ -15,11 +16,16 @@ $bu='../js/bootstrap.bundle.js';
 
 if(isset($_POST['submit'])){
     $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $user = $_POST['user'];
+    $pass = md5($_POST['pass']);
+    $email = $_POST['email'];
+    $ville = $_POST['ville'];
+    $role= 'user';
+    $query = $bd->prepare('insert into users(nom,prenom,user,pass,email,ville,role) values(?,?,?,?,?,?,?) ');
+    $query->execute([$nom, $prenom, $user, $pass, $email, $ville, $role]);
 
-    $req = $bd->prepare('insert into villes(nom) values(?)');
-    $req->execute([$nom]);
-
-    header('location: /ville/list.php?message=added');
+    header('location: /user/list.php?message=added');
 }
 
 
@@ -38,6 +44,33 @@ if(isset($_POST['submit'])){
                     <div class="form-group">
                         <label for="nom">nom</label>
                         <input type="text" name="nom" id="nom" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">prenom</label>
+                        <input type="text" name="prenom" id="prenom" class="form-control">
+                    </div>
+                    <div class="form-group">pass
+                        <label for="user">user</label>
+                        <input type="text" name="user" id="user" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">pass</label>
+                        <input type="password" name="pass" id="pass" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">email</label>
+                        <input type="email" name="email" id="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="ville">ville</label>
+                        <select type="text" name="ville" id="ville" class="form-control">
+                        
+                                <?php $req=  $bd->query('select * from villes');
+                                    while($data = $req->fetch()):
+                                ?>
+                                    <option value="<?= $data['id'] ?>"><?= $data['nom'] ?></option>
+                                <?php endwhile; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-primary btn-block">Ajouter</button>

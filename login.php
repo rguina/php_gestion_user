@@ -13,7 +13,7 @@ $bu='js/bootstrap.bundle.js';
 
 if(isset($_POST['submit'])){
     $user = $_POST['user'];
-    $pass = $_POST['pass'];
+    $pass = md5($_POST['pass']);
 
     $req = $bd->query('select count(*) from users where user="'.$user.'" and pass="'.$pass.'"');
     
